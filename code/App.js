@@ -3,25 +3,13 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import middleware from './middleware';
 import reducer from './reducers';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
-import { blue } from './utils/colors'
-import { DeckList, AddDeck } from './components'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { blue, white, purple } from './utils/colors'
+import { DeckList, AddDeck, Deck } from './components'
 
-const dummy_data= {React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  }
-}
 function AppStatusBar ({backgroundColor, ...props}){
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight}}>
@@ -29,6 +17,45 @@ function AppStatusBar ({backgroundColor, ...props}){
     </View>
   )
 }
+
+const Tabs = createBottomTabNavigator(
+  {
+    DeckList: {
+      screen: DeckList,
+      navigationOptions: {
+        tabBarLabel: 'History',
+        tabBarIcon: ({ tintColor }) => <Ionicons name='ios-book' size={30} color={tintColor} />
+      },
+    },
+    AddDeck: {
+      screen: AddDeck,
+      navigationOptions: {
+        tabBarLabel: 'History',
+        tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+      },
+    }
+  }
+)
+
+const MainNavigation = createStackNavigator(
+  {
+    Home: {
+      screen:Tabs,
+      navigationOptions: {
+        header:null
+      }
+    },
+    Deck: {
+      screen:Deck,
+      navigationOptions: {
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+        }
+      }
+    }
+  }
+)
 
 export default class App extends React.Component {
   constructor(props){
@@ -39,10 +66,7 @@ export default class App extends React.Component {
       <Provider store = { createStore(reducer,middleware) } >
         <View style={{flex:1}}>
           <AppStatusBar backgroundColor={blue} barStyle='light-content'/>
-          <DeckList/>
-          <Text>Open up App.js to start working on your app!</Text>
-          <Text>Changes you make will automatically reload.</Text>
-          <Text>Shake your phone to open the developer menu.</Text>
+          <MainNavigation/>
         </View>
       </Provider>
     );
