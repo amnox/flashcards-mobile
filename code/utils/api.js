@@ -45,3 +45,9 @@ export async function getDecks () {
     : JSON.parse(results)
 
 }
+
+export async function newDeckItem (item){
+  AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(item), () => {
+    
+  });
+}
