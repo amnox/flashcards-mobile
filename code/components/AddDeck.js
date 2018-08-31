@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 class AddDeck extends React.Component {
   componentDidMount(){
-    console.log(this.props)
   }
   render(){
     return(

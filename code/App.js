@@ -23,14 +23,14 @@ const Tabs = createBottomTabNavigator(
     DeckList: {
       screen: DeckList,
       navigationOptions: {
-        tabBarLabel: 'History',
+        tabBarLabel: 'Your Decks',
         tabBarIcon: ({ tintColor }) => <Ionicons name='ios-book' size={30} color={tintColor} />
       },
     },
     AddDeck: {
       screen: AddDeck,
       navigationOptions: {
-        tabBarLabel: 'History',
+        tabBarLabel: 'Add New',
         tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
       },
     }
@@ -61,6 +61,7 @@ export default class App extends React.Component {
   constructor(props){
     super(props)
   }
+
   render() {
     return (
       <Provider store = { createStore(reducer,middleware) } >
