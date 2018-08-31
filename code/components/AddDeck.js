@@ -36,7 +36,7 @@ class AddDeck extends React.Component {
   }
 
   componentDidMount() {
-    deleteStore()
+    //deleteStore()
   }
 
   handleChange(value) {

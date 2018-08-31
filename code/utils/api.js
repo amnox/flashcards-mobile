@@ -51,3 +51,10 @@ export async function newDeckItem (item){
     
   });
 }
+
+export async function newDeckCard(entry){
+  var results = await AsyncStorage.getItem(STORAGE_KEY)
+  results = JSON.parse(results)
+  results[entry.id].questions.concat([{question:entry.question,answer:entry.answer}])
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(results))
+}

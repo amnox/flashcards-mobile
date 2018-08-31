@@ -8,7 +8,7 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { blue, white, purple } from './utils/colors'
-import { DeckList, AddDeck, Deck } from './components'
+import { DeckList, AddDeck, Deck, Quiz, AddCard } from './components'
 
 function AppStatusBar ({backgroundColor, ...props}){
   return (
@@ -51,6 +51,27 @@ const MainNavigation = createStackNavigator(
         headerTintColor: white,
         headerStyle: {
           backgroundColor: purple,
+          
+        }
+      }
+    },
+    Quiz: {
+      screen:Quiz,
+      navigationOptions: {
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+          
+        }
+      }
+    },
+    AddCard: {
+      screen: AddCard,
+      navigationOptions: {
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+          
         }
       }
     }
