@@ -17,7 +17,6 @@ class Deck extends React.Component {
   }
 
   startQuiz(ques){
-    console.log(ques.length)
     if(ques.length > 0){
       this.props.navigation.navigate(
         'Quiz',

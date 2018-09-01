@@ -10,7 +10,7 @@ class DeckList extends React.Component {
     getDecks().then((data)=>{
       
       this.props.dispatch(receiveDecks(data))
-      deleteStore()
+      //deleteStore()
     })
   }
   render(){
