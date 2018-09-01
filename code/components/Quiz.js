@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
+import { white, lightblue, blue, grey, black } from '../utils/colors'
 
 class Quiz extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -45,28 +46,28 @@ class Quiz extends React.Component {
     const { current, score, isQuestion } = this.state
     const questions = this.props.questions
     return(
-      <View>
+      <View style={{flex: 1}}>
         {
           current<questions.length 
-          ? <View>
-            <Text>{(current+1)+'/'+questions.length}</Text>
-            <Text>{isQuestion ? questions[current].question : questions[current].answer}</Text>
+          ? <View style={styles.container}>
+            <Text style={{alignSelf:'flex-start'}}>{(current+1)+'/'+questions.length}</Text>
+            <Text style={isQuestion?styles.questionText:styles.answerText}>{isQuestion ? questions[current].question : questions[current].answer}</Text>
             <TouchableOpacity onPress={()=>this.flipText()}>
               {isQuestion 
-                ? <Text>Show Answer</Text>
-                : <Text>Hide Answer</Text>}
+                ? <Text style={{color:'red'}}>Show Answer</Text>
+                : <Text style={{color:'red'}}>Hide Answer</Text>}
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.markAnswer(true)}>
+            <TouchableOpacity style={styles.correctBtn} onPress={()=>this.markAnswer(true)}>
                 <Text>Correct</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.markAnswer(false)}>
+            <TouchableOpacity style={styles.incorrectBtn} onPress={()=>this.markAnswer(false)}>
                 <Text>Incorrect</Text>
             </TouchableOpacity>
           </View>
-          : <View>
-            <Text>Test Complete!</Text>
-            <Text>You Scored: {score}</Text>
-            <TouchableOpacity onPress={()=>this.setState({current: 0,score:0,isQuestion:true})}>
+          : <View style={styles.container}>
+            <Text style={styles.questionText}>Test Complete!</Text>
+            <Text style={styles.answerText}>You Scored: {score}</Text>
+            <TouchableOpacity style={styles.iosSubmitBtn} onPress={()=>this.setState({current: 0,score:0,isQuestion:true})}>
                 <Text>Retake</Text>
             </TouchableOpacity>
           </View>
@@ -76,6 +77,70 @@ class Quiz extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: white,
+    alignItems:'center',
+    
+  },
+  questionText:{
+    alignSelf:'center',
+    color:black,
+    fontSize: 35,
+    fontWeight:'bold',
+    margin:15
+  },
+  answerText:{
+    alignSelf:'center',
+    color:'green',
+    fontSize: 25,
+    margin:15
+  },
+  
+  iosSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25
+  },
+  correctBtn: {
+    backgroundColor: white,
+    borderColor:'green',
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25,
+    borderWidth: 2,
+  },
+  incorrectBtn: {
+    backgroundColor: white,
+    borderColor:'red',
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25,
+    borderWidth: 2,
+  }
+})
 
 function mapStateToProps({...data}, { navigation }){
   return {questions:data[navigation.state.params.entryId].questions}

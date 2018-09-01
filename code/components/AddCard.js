@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, ToastAndroid, TouchableOpacity } fro
 import { connect } from 'react-redux'
 import { newDeckCard } from '../utils/api'
 import { addDeckCard } from '../actions'
+import { white, lightblue } from '../utils/colors'
 
 class AddCard extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -57,16 +58,43 @@ class AddCard extends React.Component {
   render(){
     const { title, questions } = this.props
     return(
-      <View>
-        <TextInput onChangeText={(value)=>this.handleQuestionChange(value)} placeholder='Question'/>
-        <TextInput onChangeText={(value)=>this.handleAnswerChange(value)} placeholder='Answer'/>
-        <TouchableOpacity onPress={()=>this.handleSubmit()}>
+      <View style={styles.container}>
+        <TextInput style={styles.inputBox} onChangeText={(value)=>this.handleQuestionChange(value)} placeholder='Question'/>
+        <TextInput style={styles.inputBox} onChangeText={(value)=>this.handleAnswerChange(value)} placeholder='Answer'/>
+        <TouchableOpacity style={styles.androidSubmitBtn} onPress={()=>this.handleSubmit()}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: white,
+    alignItems:'center',
+  },
+  inputBox: {
+    alignSelf:'stretch',
+    fontSize: 20,
+    padding: 20,
+    margin:20
+  },
+  androidSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25
+  }
+})
 
 function mapStateToProps({...data}, { navigation }){
   return data[navigation.state.params.entryId]

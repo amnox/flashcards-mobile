@@ -10,7 +10,7 @@ class DeckList extends React.Component {
     getDecks().then((data)=>{
       
       this.props.dispatch(receiveDecks(data))
-      //deleteStore()
+      deleteStore()
     })
   }
   render(){
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
   deckName:{
     alignSelf:'center',
     color:blue,
-    fontSize: 20
+    fontSize: 20,
+    fontWeight:'bold'
   },
   cardCount:{
     alignSelf:'center',

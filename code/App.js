@@ -9,6 +9,7 @@ import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { blue, white, purple } from './utils/colors'
 import { DeckList, AddDeck, Deck, Quiz, AddCard } from './components'
+import { setLocalNotification } from './utils/helpers'
 
 function AppStatusBar ({backgroundColor, ...props}){
   return (
@@ -81,6 +82,7 @@ const MainNavigation = createStackNavigator(
 export default class App extends React.Component {
   constructor(props){
     super(props)
+    setLocalNotification()
   }
 
   render() {

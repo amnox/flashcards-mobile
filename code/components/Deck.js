@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Platform, TouchableOpacity, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux'
-import { white } from '../utils/colors'
+import { white, lightblue, blue, grey } from '../utils/colors'
 
 class Deck extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,9 +32,9 @@ class Deck extends React.Component {
   render(){
     const { title, questions } = this.props
     return(
-      <View>
-        <Text>{title}</Text>
-        <Text>{questions.length}</Text>
+      <View style={styles.container}>
+        <Text style={styles.deckName}>{title}</Text>
+        <Text style={styles.cardCount}>Cards: {questions.length}</Text>
         <TouchableOpacity
           style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
           onPress={()=>this.props.navigation.navigate(
@@ -45,7 +45,7 @@ class Deck extends React.Component {
           <Text style={styles.submitBtnText}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+          style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn2}
           onPress={()=>this.startQuiz(questions)}
         >
           <Text style={styles.submitBtnText}>Start Quiz</Text>
@@ -58,27 +58,60 @@ class Deck extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: white
+    padding: 15,
+    backgroundColor: white,
+    alignItems:'center'
+  },
+  deckName:{
+    alignSelf:'center',
+    color:blue,
+    fontSize: 35,
+    fontWeight:'bold',
+    marginTop:15
+  },
+  cardCount:{
+    alignSelf:'center',
+    color:grey,
+    fontSize: 20,
+    marginBottom:30
   },
   iosSubmitBtn: {
-    backgroundColor: 'purple',
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  androidSubmitBtn: {
-    backgroundColor: 'purple',
+    backgroundColor: lightblue,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
     borderRadius: 2,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:25
+  },
+  androidSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25
+  },
+  androidSubmitBtn2: {
+    backgroundColor: white,
+    borderColor:lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25,
+    borderWidth: 1,
   }
 })
 

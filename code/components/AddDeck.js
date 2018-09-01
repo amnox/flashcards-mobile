@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux';
-import { white } from '../utils/colors'
+import { white, lightblue } from '../utils/colors'
 import { addDeck } from '../actions'
 import { newDeckItem, deleteStore } from '../utils/api'
 
@@ -61,6 +61,7 @@ class AddDeck extends React.Component {
       newDeckItem(newDeck).then(()=>{
         this.props.dispatch(addDeck(newDeck))
         ToastAndroid.show(this.state.title+' deck created', ToastAndroid.LONG)
+        this.setState({title: ''})
       }).catch(err => ToastAndroid.show('Request Failed', ToastAndroid.LONG))
     } else {
       ToastAndroid.show('Please enter a value', ToastAndroid.LONG)
@@ -72,8 +73,8 @@ class AddDeck extends React.Component {
 
     return(
       <View style={styles.container}>
-        <Text>AddDeck</Text>
-        <TextInput value={this.state.title} onChangeText={(value)=>this.handleChange(value)}/>
+        <Text style={{fontSize:25}}>Enter the name of New Deck</Text>
+        <TextInput style={styles.inputBox} textAlign={'center'} placeholder="My Deck" value={this.state.title} onChangeText={(value)=>this.handleChange(value)}/>
         <SubmitBtn onPress={()=>this.handleSubmit()}/>
       </View>
     )
@@ -84,26 +85,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: white
+    backgroundColor: white,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  inputBox: {
+    alignSelf:'stretch',
+    fontSize: 20,
+    padding: 20,
+    margin:20
   },
   iosSubmitBtn: {
-    backgroundColor: 'purple',
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  androidSubmitBtn: {
-    backgroundColor: 'purple',
+    backgroundColor: lightblue,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
     borderRadius: 2,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:25
+  },
+  androidSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:25
   }
 })
 

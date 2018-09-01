@@ -1,14 +1,17 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet,AsyncStorage } from 'react-native'
 import { 
   FontAwesome, 
   MaterialCommunityIcons,
   MaterialIcons
 } from '@expo/vector-icons'
+import { Notifications, Permissions } from 'expo'
 import {
   red, blue , lightPurp,
   white, orange, pink
 } from './colors'
+
+const NOTIFICATION_KEY = 'flashcardsapp:notifications'
 
 export function isBetween (num, x, y) {
     if (num >= x && num <= y) {
@@ -63,3 +66,51 @@ const styles = StyleSheet.create({
     marginRight: 20,
   }
 })
+
+export function clearLocalNotification () {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+function createLocalNotification(){
+  return {
+    title:'Time to take a Quiz!',
+    body:'Practice makes perfect. Revise your decks by taking a quiz.',
+    ios: {
+      sound: true
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: 'false',
+      vibrate: 'true'
+    }
+  }
+}
+
+export function setLocalNotification(){
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data)=>{
+      if (data===null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status })=>{
+            if (status==='granted') {
+              Notifications.cancelAllScheduledNotificationsAsync()
+              let tommorow = new Date()
+              tommorow.setDate(tommorow.getDate()+1)
+              tommorow.setHours(20)
+              tommorow.setMinutes(0)
+              Notifications.scheduleLocalNotificationAsync(
+                createLocalNotification(),
+                {
+                  time:tommorow,
+                  repeat:'day'
+                }
+              )
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+          })
+      }
+    })
+}
